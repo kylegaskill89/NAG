@@ -26,6 +26,7 @@ public class ControlCharacter : MonoBehaviour
     public bool canDamage = true;
     public bool canRotate = true;
 
+
 	void Start ()
 	{
         rb = GetComponent<Rigidbody>();
@@ -107,7 +108,7 @@ public class ControlCharacter : MonoBehaviour
             {
                 if (Input.GetButtonDown("Slow"))
                 {
-                    gameObject.transform.Rotate(Vector3.up, 180 * Time.deltaTime);
+                    gameObject.transform.Rotate(Vector3.up, 180);
                 }
             }
 
