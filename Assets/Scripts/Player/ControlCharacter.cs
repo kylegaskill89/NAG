@@ -100,6 +100,17 @@ public class ControlCharacter : MonoBehaviour
             {
                 gameObject.transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime);
             }
+
+            // Quick Turn
+
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                if (Input.GetButtonDown("Slow"))
+                {
+                    gameObject.transform.Rotate(Vector3.up, 180 * Time.deltaTime);
+                }
+            }
+
         }
 
         // Dodge and iFrames
