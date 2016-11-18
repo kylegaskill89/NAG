@@ -27,15 +27,16 @@ public class ControlCharacter : MonoBehaviour
     public bool isSlow = false;
     public bool canDamage = true;
     public bool canRotate = true;
+    public bool canJump = true;
 
 
 	void Start ()
 	{
         rb = GetComponent<Rigidbody>();
 	}
-	
-	void Update ()
-	{
+
+    void Update()
+    {
 
         if (isSlow)
         {
@@ -44,7 +45,8 @@ public class ControlCharacter : MonoBehaviour
             if (Input.GetAxis("Vertical") > 0 && !isRolling)
             {
                 gameObject.transform.Translate(Vector3.forward * slowSpeed * Time.deltaTime);
-            } else if (Input.GetAxis("Vertical") < 0 && !isRolling)
+            }
+            else if (Input.GetAxis("Vertical") < 0 && !isRolling)
             {
                 gameObject.transform.Translate(-Vector3.forward * slowSpeed * Time.deltaTime);
             }
@@ -54,51 +56,55 @@ public class ControlCharacter : MonoBehaviour
             if (Input.GetAxis("Horizontal") > 0 && !isRolling)
             {
                 gameObject.transform.Translate(Vector3.right * slowSpeed / 2 * Time.deltaTime);
-            } else if (Input.GetAxis("Horizontal") < 0 && !isRolling)
+            }
+            else if (Input.GetAxis("Horizontal") < 0 && !isRolling)
             {
                 gameObject.transform.Translate(-Vector3.right * slowSpeed / 2 * Time.deltaTime);
             }
-            
+
             // Rotate Character + Camera
-            
+
             if (Input.GetButton("RotateRight") && canRotate)
             {
                 gameObject.transform.Rotate(Vector3.up, slowRotate * Time.deltaTime);
             }
-            
+
             if (Input.GetButton("RotateLeft") && canRotate)
             {
                 gameObject.transform.Rotate(Vector3.up, -slowRotate * Time.deltaTime);
             }
-        } else
+        }
+        else
         {
             // Forward + Backward Movement
-            
+
             if (Input.GetAxis("Vertical") > 0 && !isRolling)
             {
                 gameObject.transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            } else if (Input.GetAxis("Vertical") < 0 && !isRolling)
+            }
+            else if (Input.GetAxis("Vertical") < 0 && !isRolling)
             {
                 gameObject.transform.Translate(-Vector3.forward * speed * Time.deltaTime);
             }
-            
+
             // Left + Right Movement
-            
+
             if (Input.GetAxis("Horizontal") > 0 && !isRolling)
             {
                 gameObject.transform.Translate(Vector3.right * speed * Time.deltaTime);
-            } else if (Input.GetAxis("Horizontal") < 0 && !isRolling)
+            }
+            else if (Input.GetAxis("Horizontal") < 0 && !isRolling)
             {
                 gameObject.transform.Translate(-Vector3.right * speed * Time.deltaTime);
             }
-            
+
             // Rotate Character + Camera
-            
+
             if (Input.GetButton("RotateRight") && canRotate)
             {
                 gameObject.transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime);
             }
-            
+
             if (Input.GetButton("RotateLeft") && canRotate)
             {
                 gameObject.transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime);
@@ -118,15 +124,17 @@ public class ControlCharacter : MonoBehaviour
 
         // Dodge and iFrames
 
-        if (Input.GetButton("RotateRight") && Input.GetButtonDown("Slow"))
+        if (Input.GetButton("RotateRight") && Input.GetButtonDown("Jump"))
         {
+            isJumping = true;
             canDamage = false;
             RollRight();
         }
 
-        if (Input.GetButton("RotateLeft") && Input.GetButtonDown("Slow"))
+        if (Input.GetButton("RotateLeft") && Input.GetButtonDown("Jump"))
         {
             canDamage = false;
+            isJumping = true;
             RollLeft();
         }
 
@@ -145,11 +153,13 @@ public class ControlCharacter : MonoBehaviour
 
         if (timer > rollLength)
         {
+            isJumping = false;
             isRolling = false;
             canRotate = true;
-            timer = 0;                       
+            timer = 0;
         }
 
+        //Handle jumping
 
         if (Input.GetButtonDown("Jump") && rb.velocity.magnitude != 0 && !isJumping)
         {
@@ -166,7 +176,8 @@ public class ControlCharacter : MonoBehaviour
         if (Input.GetButton("Slow") && !isJumping)
         {
             isSlow = true;
-        } else
+        }
+        else
         {
             isSlow = false;
         }
@@ -174,20 +185,23 @@ public class ControlCharacter : MonoBehaviour
         if (isJumping)
         {
             speed = speedJump;
-        } else
+        }
+        else
         {
             speed = 10;
         }
         if (isSlowJumping)
         {
             speed = speedSlowJump;
-        } else
+        }
+        else
         {
             speed = 10;
         }
 
+    }
 
-	}
+
 
     void Jump()
     {
@@ -205,12 +219,12 @@ public class ControlCharacter : MonoBehaviour
 
     void RollRight()
     {
-        isRolling = true;       
+        isRolling = true;
     }
 
     void RollLeft()
     {
-        isRolling = true;       
+        isRolling = true;
     }
 
     void OnCollisionExit(Collision collision)
