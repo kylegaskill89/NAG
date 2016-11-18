@@ -13,6 +13,6 @@ public class BulletManager : MonoBehaviour {
 
 	void Update ()
     {
-        GetComponent<Rigidbody>().velocity = transform.forward * speed;
+        
     }
 }
