@@ -284,7 +284,8 @@ MonoBehaviour:
   speedJump: 7.5
   speedSlowJump: 2
   timer: 0
-  iFrameLength: 0.75
+  iFrameLength: 0.25
+  rollLength: 0.75
   jumpHeight: 300
   isJumping: 0
   isSlowJumping: 0
@@ -305,7 +306,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c15c05fda25faf04d96ae795fe18f255, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
